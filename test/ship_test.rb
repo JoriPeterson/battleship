@@ -17,8 +17,13 @@ class ShipTest < Minitest::Test
     assert_equal @cruiser.length, 3
   end
 
-  # def test_cruiser_has_an_initial_health
-  #   assert_equal @cruiser.health, 3
-  # end
+  def test_ship_has_initial_health
+    assert_equal @cruiser.health, 3
+  end
+
+  def test_it_takes_a_hit
+    @cruiser.hit
+    assert @cruiser.health, 2
+  end
 
 end
