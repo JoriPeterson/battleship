@@ -7,10 +7,15 @@ class Cell
     @coordinate = coordinate
     @ship = nil
     @fired_upon = false
+    @empty = true
   end
 
   def empty?
-    @ship == nil
+    if @ship == nil
+      @empty = true
+    else
+      @empty = false
+    end
   end
 
   def place_ship(ship)
@@ -30,14 +35,23 @@ class Cell
     @fired_upon
   end
 
-  def render
-    if @fired_upon == false
-      @coordinate = "."
-    elsif @fired_upon == true && empty? == true
+  def render(show_ship=false)
+    if @fired_upon == true && empty? == true
       @coordinate = "M"
-    elsif @fired_upon == true && empty? == false
+    elsif @fired_upon == true && empty? == false && @ship.sunk? == false
       @coordinate = "H"
+    elsif @fired_upon == false && empty? == true
+      @coordinate = "."
+    elsif @fired_upon == false && empty? == false
 
+      if show_ship == true
+        @coordinate = "S"
+      else
+        @coordinate = "."
+      end
+
+    elsif @ship.sunk?
+      @coordinate = "X"
     end
   end
 
