@@ -1,3 +1,5 @@
+require 'pry'
+
 class Cell
   attr_reader :coordinate, :ship, :fired_upon
 
@@ -16,7 +18,9 @@ class Cell
   end
 
   def fire_upon
-    if empty? == false
+    if empty?
+      @fired_upon = true
+    elsif empty? == false
       @ship.hit
       @fired_upon = true
     end
@@ -24,6 +28,17 @@ class Cell
 
   def fired_upon?
     @fired_upon
+  end
+
+  def render
+    if @fired_upon == false
+      @coordinate = "."
+    elsif @fired_upon == true && empty? == true
+      @coordinate = "M"
+    elsif @fired_upon == true && empty? == false
+      @coordinate = "H"
+
+    end
   end
 
 end
