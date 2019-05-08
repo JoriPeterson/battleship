@@ -33,4 +33,17 @@ class CellTest < MiniTest::Test
     refute @cell.empty?
   end
 
+  def test_it_takes_fire
+    cruiser = Ship.new("Cruiser", 3)
+
+    @cell.place_ship(cruiser)
+    refute @cell.fired_upon?
+    @cell.fire_upon
+    assert_equal @cell.ship.health, 2
+    assert @cell.fired_upon?
+    #
+    # cruiser.hit
+    # cruiser.sunk?
+  end
+
 end
