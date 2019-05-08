@@ -23,16 +23,14 @@ class CellTest < MiniTest::Test
   end
 
   def test_if_cell_is_empty
-    @cruiser = Ship.new("Cruiser", 3)
     assert @cell.empty?
   end
 
-  def test_it_has_a_ship
-    skip
-    assert_instance_of Ship, @ship
+  def test_a_ship_is_placed
+    cruiser = Ship.new("Cruiser", 3)
+    @cell.place_ship(cruiser)
+    assert_equal cruiser, @cell.ship
+    refute @cell.empty?
   end
-
-
-
 
 end
