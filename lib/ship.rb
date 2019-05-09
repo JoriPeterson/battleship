@@ -10,6 +10,7 @@ class Ship
 
   def hit
     @health -= 1
+    @coordinate = "H"
   end
 
   def sunk?
