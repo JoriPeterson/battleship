@@ -43,13 +43,13 @@ class Cell
     elsif @fired_upon == false && empty? == true
       @coordinate = "."
     elsif @fired_upon == false && empty? == false
-
+      
       if show_ship == true
         @coordinate = "S"
       else
         @coordinate = "."
       end
-
+      
     elsif @ship.sunk?
       @coordinate = "X"
     end
