@@ -19,5 +19,7 @@ class BoardTest < MiniTest::Test
     assert_equal 16, @board.cells.length
   end
 
+  #adding comment
+
 
 end
