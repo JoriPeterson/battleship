@@ -23,5 +23,6 @@ class Board
      "D4" => Cell.new("D4")
      }
   end
+  #adding comment
 
 end
