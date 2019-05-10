@@ -31,6 +31,9 @@ class BoardTest < MiniTest::Test
     refute @board.consecutive?(@submarine, ["A1", "C1"])
     refute @board.consecutive?(@cruiser, ["A3", "A2", "A1"])
     refute @board.consecutive?(@submarine, ["C1", "B1"])
+    # assert @board.consecutive?(@submarine, ["A1", "A2"])
+    assert @board.consecutive?(@cruiser, ["A1", "A2", "A3"])
+    assert @board.consecutive?(@cruiser, ["A1", "B1", "C1"])
 
     # can i put an or || in this assert
     # assert_equal @board.ship_coordinates, @board.ship_coordinates.sort
