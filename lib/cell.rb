@@ -11,11 +11,7 @@ class Cell
   end
 
   def empty?
-    if @ship == nil
-      @empty = true
-    else
-      @empty = false
-    end
+    @ship == nil
   end
 
   def place_ship(ship)
@@ -31,25 +27,29 @@ class Cell
     end
   end
 
+  def ord
+    @coordinate[0].ord.to_s  + @coordinate[1] 
+  end
+
   def fired_upon?
     @fired_upon
   end
 
   def render(show_ship=false)
-    if @fired_upon == true && empty? == true
+    if @fired_upon == true && !empty?
       @coordinate = "M"
-    elsif @fired_upon == true && empty? == false && @ship.sunk? == false
+    elsif @fired_upon == true && empty? && @ship.sunk? == false
       @coordinate = "H"
-    elsif @fired_upon == false && empty? == true
+    elsif @fired_upon == false && !empty?
       @coordinate = "."
-    elsif @fired_upon == false && empty? == false
-      
+    elsif @fired_upon == false && empty?
+
       if show_ship == true
         @coordinate = "S"
       else
         @coordinate = "."
       end
-      
+
     elsif @ship.sunk?
       @coordinate = "X"
     end
