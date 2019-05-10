@@ -31,21 +31,21 @@ class BoardTest < MiniTest::Test
     refute @board.consecutive?(@submarine, ["A1", "C1"])
     refute @board.consecutive?(@cruiser, ["A3", "A2", "A1"])
     refute @board.consecutive?(@submarine, ["C1", "B1"])
-    # assert @board.consecutive?(@submarine, ["A1", "A2"])
+
+    # check if horizontal cruiser has valid consecutive coordinates
     assert @board.consecutive?(@cruiser, ["A1", "A2", "A3"])
+    # check if vertical cruiser has valid consecutive coordinates
     assert @board.consecutive?(@cruiser, ["A1", "B1", "C1"])
-
-    # can i put an or || in this assert
-    # assert_equal @board.ship_coordinates, @board.ship_coordinates.sort
+    # check if horizontal submarine has valid consecutive coordinates
+    assert @board.consecutive?(@submarine, ["A1", "A2"])
+    # check if vertical submarine has valid consecutive coordinates
+    assert @board.consecutive?(@submarine, ["A1", "B1"])
   end
-  #
-  # def test_ships_coordinates_are_not_diagonal
-  #   refute board.valid_placement?(cruiser, ["A1", "B2", "C3"])
-  #   refute board.valid_placement?(submarine, ["C2", "D3"])
 
-    # assert_equal ==> are ship coordinates diagonal?
-    # can i use the .diagonal method?
-  # end
+  def test_ships_coordinates_are_not_diagonal
+    refute @board.consecutive?(@cruiser, ["A1", "B2", "C3"])
+    refute @board.consecutive?(@submarine, ["C2", "D3"])
+  end
 
 
 
