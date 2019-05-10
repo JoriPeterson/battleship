@@ -1,4 +1,6 @@
 require './lib/cell'
+require './lib/ship'
+require 'pry'
 
 class Board
   attr_reader :cells
@@ -23,6 +25,29 @@ class Board
      "D4" => Cell.new("D4")
      }
   end
-  #adding comment
 
+  def valid_length?(ship, coordinate)
+    ship.length == coordinate.length
+  end
+
+  def valid_coordinates(coordinates)
+  end
+
+  def consecutive?(ship, coordinate)
+    horizontal.include?(coordinate) || vertical.include?(coordinate)
+  end
+
+  def horizontal
+    # horizontal continuous:
+    @cells.keys.each_cons(3).find do |values|
+      values[0][0] == values[1][0] && values[0][0] == values[2][0]
+    end
+  end
+
+  def vertical
+    # vertical continuous:
+    @cells.keys.map(&:reverse).sort.each_cons(3).find do |values|
+      values[0][0] == values[1][0] && values[0][0] == values[2][0]
+    end
+  end
 end
