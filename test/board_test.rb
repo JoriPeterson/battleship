@@ -26,7 +26,7 @@ class BoardTest < MiniTest::Test
     refute @board.valid_length?(@submarine, ["A2", "A3", "A4"])
   end
 
-  def test_ships_coordinates_are_consecutive
+  def tes9t_ships_coordinates_are_consecutive
     refute @board.consecutive?(@cruiser, ["A1", "A2", "A4"])
     refute @board.consecutive?(@submarine, ["A1", "C1"])
     refute @board.consecutive?(@cruiser, ["A3", "A2", "A1"])
