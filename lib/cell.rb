@@ -7,7 +7,6 @@ class Cell
     @coordinate = coordinate
     @ship = nil
     @fired_upon = false
-    @empty = true
   end
 
   def empty?
@@ -28,7 +27,7 @@ class Cell
   end
 
   def ord
-    @coordinate[0].ord.to_s  + @coordinate[1] 
+    @coordinate[0].ord.to_s  + @coordinate[1]
   end
 
   def fired_upon?
@@ -36,13 +35,13 @@ class Cell
   end
 
   def render(show_ship=false)
-    if @fired_upon == true && !empty?
+    if @fired_upon == true && empty?
       @coordinate = "M"
-    elsif @fired_upon == true && empty? && @ship.sunk? == false
+    elsif @fired_upon == true && !empty? && @ship.sunk? == false
       @coordinate = "H"
-    elsif @fired_upon == false && !empty?
-      @coordinate = "."
     elsif @fired_upon == false && empty?
+      @coordinate = "."
+    elsif @fired_upon == false && !empty?
 
       if show_ship == true
         @coordinate = "S"
