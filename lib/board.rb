@@ -26,15 +26,15 @@ class Board
      }
   end
 
-  def valid_length?(ship, coordinate)
-    ship.length == coordinate.length
+  def valid_length?(ship, coordinates)
+    ship.length == coordinates.length
   end
 
-  def consecutive?(ship, coordinate)
+  def consecutive?(ship, coordinates)
     if ship.length == 3
-      horizontal_cruiser.include?(coordinate) || vertical_cruiser.include?(coordinate)
+      horizontal_cruiser.include?(coordinates) || vertical_cruiser.include?(coordinates)
     else
-      horizontal_submarine.include?(coordinate) || vertical_submarine.include?(coordinate)
+      horizontal_submarine.include?(coordinates) || vertical_submarine.include?(coordinates)
     end
   end
 
@@ -78,6 +78,15 @@ class Board
       new_coords << coord
     end
     new_coords
+  end
+
+  def place(ship, coordinates)
+    if valid_length?(ship, coordinates) && consecutive?(ship, coordinates)
+
+      coordinates.each do |cell_key|
+        @cells[cell_key].place_ship(ship)  
+      end
+    end
   end
 
 end
