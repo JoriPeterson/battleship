@@ -102,4 +102,27 @@ class Board
       end
   end
 
+  def render(show_ship=false)
+
+    rows = Math.sqrt(@cells.keys.length).to_i
+    columns = rows
+
+      (1..columns).to_a.each do |header|
+        print " #{header}"
+      end
+      puts ' '
+
+      index = 0
+
+      ('A'..'D').to_a.each do |sider|
+        print "#{sider}"
+          @cells.keys[0..columns - 1].each do |key|
+          print " #{@cells[key].render(show_ship)}"
+          end
+        puts ' '
+
+        index += 1
+
+      end
+  end
 end
