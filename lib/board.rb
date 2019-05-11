@@ -1,4 +1,6 @@
 require './lib/cell'
+require './lib/ship'
+require 'pry'
 
 class Board
   attr_reader :cells
@@ -23,6 +25,59 @@ class Board
      "D4" => Cell.new("D4")
      }
   end
-  #adding comment
+
+  def valid_length?(ship, coordinate)
+    ship.length == coordinate.length
+  end
+
+  def consecutive?(ship, coordinate)
+    if ship.length == 3
+      horizontal_cruiser.include?(coordinate) || vertical_cruiser.include?(coordinate)
+    else
+      horizontal_submarine.include?(coordinate) || vertical_submarine.include?(coordinate)
+    end
+  end
+
+  def horizontal_cruiser
+    @cells.keys.each_cons(3).find_all do |values|
+      values[0][0] == values[1][0] && values[0][0] == values[2][0]
+    end
+  end
+
+  def horizontal_submarine
+    @cells.keys.each_cons(2).find_all do |values|
+      values[0][0] == values[1][0]
+    end
+  end
+
+  def vertical_cruiser
+    coordinates_reversed = @cells.keys.map(&:reverse).sort.each_cons(3).find_all do |values|
+      values[0][0] == values[1][0] && values[0][0] == values[2][0]
+    end
+    new_coords = []
+    coordinates_reversed.each do |array|
+      coord = []
+      array.each do |coordinate|
+        coord << coordinate.reverse
+      end
+      new_coords << coord
+    end
+    new_coords
+  end
+
+  def vertical_submarine
+    coordinates_reversed = @cells.keys.map(&:reverse).sort.each_cons(2).find_all do |values|
+      values[0][0] == values[1][0]
+    end
+    new_coords = []
+    coordinates_reversed.each do |array|
+      coord = []
+      array.each do |coordinate|
+        coord << coordinate.reverse
+      end
+      new_coords << coord
+    end
+    new_coords
+  end
 
 end

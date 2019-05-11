@@ -55,21 +55,21 @@ class CellTest < MiniTest::Test
 
   def test_ship_renders_hit_and_sunk
     cruiser = Ship.new("Cruiser", 3)
-    cell_2 = Cell.new("B4")
+    cell_2 = Cell.new("A3")
 
     cell_2.place_ship(cruiser)
     assert_equal ".", cell_2.render
     # "S" = reveal ship placement but it has not been fired upon
     assert_equal "S", cell_2.render(true)
     cell_2.fire_upon
- 
+
     # "H" = ship hit
     assert_equal "H", cell_2.render
     refute cruiser.sunk?
     cruiser.hit
     cruiser.hit
     assert cruiser.sunk?
-    
+
     # "X" = ship has sunk
     assert_equal "X", cell_2.render
   end

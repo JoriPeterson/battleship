@@ -1,0 +1,4 @@
+class EG
+
+  def hello
+    
