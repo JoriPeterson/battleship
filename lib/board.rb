@@ -26,15 +26,20 @@ class Board
      }
   end
 
-  def valid_length?(ship, coordinate)
-    ship.length == coordinate.length
+  def valid_placement?(ship, coordinates)
+    valid_length?(ship, coordinates) && consecutive?(ship, coordinates) &&
+    not_overlap?(coordinates)
   end
 
-  def consecutive?(ship, coordinate)
+  def valid_length?(ship, coordinates)
+    ship.length == coordinates.length
+  end
+
+  def consecutive?(ship, coordinates)
     if ship.length == 3
-      horizontal_cruiser.include?(coordinate) || vertical_cruiser.include?(coordinate)
+      horizontal_cruiser.include?(coordinates) || vertical_cruiser.include?(coordinates)
     else
-      horizontal_submarine.include?(coordinate) || vertical_submarine.include?(coordinate)
+      horizontal_submarine.include?(coordinates) || vertical_submarine.include?(coordinates)
     end
   end
 
@@ -80,4 +85,44 @@ class Board
     new_coords
   end
 
+  def not_overlap?(coordinates)
+      coordinates.each do |coordinate|
+        if @cells[coordinate].empty? == false
+          break
+        end
+      end
+
+  end
+
+  def place(ship, coordinates)
+    valid_placement?(ship, coordinates)
+
+      coordinates.each do |cell_key|
+        @cells[cell_key].place_ship(ship)
+      end
+  end
+
+  def render(show_ship=false)
+
+    rows = Math.sqrt(@cells.keys.length).to_i
+    columns = rows
+
+      (1..columns).to_a.each do |header|
+        print " #{header}"
+      end
+      puts ' '
+
+      index = 0
+
+      ('A'..'D').to_a.each do |sider|
+        print "#{sider}"
+          @cells.keys[0..columns - 1].each do |key|
+          print " #{@cells[key].render(show_ship)}"
+          end
+        puts ' '
+
+        index += 1
+
+      end
+  end
 end
