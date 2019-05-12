@@ -107,22 +107,21 @@ class Board
     rows = Math.sqrt(@cells.keys.length).to_i
     columns = rows
 
+    rr = " "
+    #rr = rendered_rows
+
       (1..columns).to_a.each do |header|
-        print " #{header}"
+        rr += " #{header}"
       end
-      puts ' '
+      rr += " \n"
 
-      index = 0
-
-      ('A'..'D').to_a.each do |sider|
-        print "#{sider}"
-          @cells.keys[0..columns - 1].each do |key|
-          print " #{@cells[key].render(show_ship)}"
+      ('A'..'D').to_a.each_with_index do |sider, index|
+        rr += "#{sider}"
+            @cells.keys[index * columns..(index * columns) + columns - 1].each do |key|
+            rr += " #{@cells[key].render(show_ship)}"
           end
-        puts ' '
-
-        index += 1
-
+        rr += " \n"
       end
+      rr
   end
 end
