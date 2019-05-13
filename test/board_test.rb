@@ -65,7 +65,7 @@ class BoardTest < MiniTest::Test
 
   def test_board_visually_renders
     @board.place(@cruiser, ["A1", "A2", "A3"])
-    # assert_equal "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n", @board.render
+    assert_equal "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n", @board.render
 
     assert_equal "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n", @board.render(true)
   end
