@@ -26,9 +26,15 @@ class Board
      }
   end
 
+  # make tests for this method
+  def valid_coordinate?(coordinate)
+    if @cells.keys.include? coordinate
+    end
+  end
+
   def valid_placement?(ship, coordinates)
     valid_length?(ship, coordinates) && consecutive?(ship, coordinates) &&
-    not_overlap?(coordinates)
+    not_overlap?(coordinates) && valid_coordinate?(coordinate)
   end
 
   def valid_length?(ship, coordinates)

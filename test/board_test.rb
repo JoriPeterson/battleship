@@ -20,6 +20,14 @@ class BoardTest < MiniTest::Test
     assert_instance_of Board, @board
   end
 
+  def test_it_returns_valid_coordinates
+    @board.valid_coordinate?("A1")
+    @board.valid_coordinate?("D4")
+    @board.valid_coordinate?("A5")
+    @board.valid_coordinate?("E1")
+    @board.valid_coordinate?("A22")
+  end
+
   def test_cells_return_coordinates_and_cell_objects
     assert_equal 16, @board.cells.length
   end
