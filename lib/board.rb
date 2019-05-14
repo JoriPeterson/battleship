@@ -28,13 +28,23 @@ class Board
 
   # make tests for this method
   def valid_coordinate?(coordinate)
-    if @cells.keys.include? coordinate
-    end
+    @cells.keys.include? coordinate
   end
 
   def valid_placement?(ship, coordinates)
-    valid_length?(ship, coordinates) && consecutive?(ship, coordinates) &&
-    not_overlap?(coordinates) && valid_coordinate?(coordinate)
+    valid_length = valid_length?(ship, coordinates)
+    consecutive = consecutive?(ship, coordinates)
+    not_overlap = not_overlap?(coordinates)
+    valid_coordinates = coordinates.find_all do |coord|
+      # TODO: blows up with coordinates not on board
+      valid_coordinate?(coord)
+    end
+    is_valid = valid_coordinates == coordinates
+    p 'These were the values for valid length:', valid_length
+    p 'These were the values for consecutive:', consecutive
+    p 'These were the values for not overlap:', not_overlap
+    # p 'These were the values for valid coord:', valid_coordinate
+    valid_length && consecutive && not_overlap && is_valid
   end
 
   def valid_length?(ship, coordinates)
@@ -101,11 +111,15 @@ class Board
   end
 
   def place(ship, coordinates)
-    valid_placement?(ship, coordinates)
-
+    if valid_placement?(ship, coordinates)
       coordinates.each do |cell_key|
         @cells[cell_key].place_ship(ship)
       end
+      true
+    else
+      # raise ArgumentError "Oh, those coordinates aren't valid"
+      false
+    end
   end
 
   def render(show_ship=false)
