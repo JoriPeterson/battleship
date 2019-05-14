@@ -4,7 +4,8 @@ require './lib/board'
 require 'pry'
 
 class Setup
-
+  attr_reader :computer_board, :player_board
+  
   def initialize
     @player_board = Board.new
     @computer_board = Board.new
@@ -20,8 +21,8 @@ class Setup
     # reset
     p 'Welcome to BATTLESHIP'
     p 'Enter p to play. Enter q to quit.'
-    @answer = gets.chomp
-    if @answer == 'p'
+    answer = gets.chomp
+    if answer == 'p'
       computer_ship_placement
     else
       p 'okay byeeeee'
@@ -48,15 +49,16 @@ class Setup
       # placecruiserusingcruisercoords
       @computer_board.place(@computer_cruiser, cruiser_coords)
     # check if placement is valid
-      @computer_board.valid_placement?(@computer_cruiser, cruiser_coords)
+      # @computer_board.valid_placement?(@computer_cruiser, cruiser_coords)
 
     # place submarine using submarine coords
       @computer_board.place(@computer_submarine, submarine_coords)
     # check if placement is valid
-      @computer_board.valid_placement?(@computer_submarine, submarine_coords)
+      # @computer_board.valid_placement?(@computer_submarine, submarine_coords)
 
     # render the board with coordinates
       @computer_board.render(false)
+      p 'the ai board should be rendered here', @computer_board.render(true)
       get_user_coords
   end
 
@@ -106,23 +108,25 @@ class Setup
       end
     end
     show_user_board
+    # display_boards
     # check if placement is valid
   end
 
-
-    # show player their board and placed ships
-    def show_user_board
-      puts @player_board.render(true)
-    end
-
-  def valid_user_coords(user_cruiser_coords, user_submarine_coords)
-    # check if coords are valid
-    # apply this method dynamically to user and computer coord input
-    unless @player_board.valid_placement?(@player_cruiser, user_cruiser_coords) &&
-      @player_board.valid_placement?(@player_submarine, user_submarine_coords)
-      p 'Those are invalid coordinates. Please try again:'
-      get_user_coords
-    end
+  # show player their board and placed ships
+  def show_user_board
+    puts @player_board.render(true)
   end
+
+  def show_computer_board
+    puts @computer_board.render(false)
+  end
+
+  # def display_boards
+  #   p '============ AI BOARD =========='
+  #   puts @computer_board.render(false)
+  #   p '============ USER BOARD =========='
+  #   puts show_user_board
+  # end
+
 
 end
