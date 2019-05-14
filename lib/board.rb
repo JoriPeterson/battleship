@@ -32,19 +32,23 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
+
+    valid_coordinates = coordinates.all? do |coord|
+      valid_coordinate?(coord)
+    end
+    if valid_coordinates
     valid_length = valid_length?(ship, coordinates)
     consecutive = consecutive?(ship, coordinates)
     not_overlap = not_overlap?(coordinates)
-    valid_coordinates = coordinates.find_all do |coord|
-      # TODO: blows up with coordinates not on board
-      valid_coordinate?(coord)
+    # is_valid = valid_coordinates == coordinates
+    valid_length && consecutive && not_overlap && valid_coordinates
+    else
+      false
     end
-    is_valid = valid_coordinates == coordinates
-    p 'These were the values for valid length:', valid_length
-    p 'These were the values for consecutive:', consecutive
-    p 'These were the values for not overlap:', not_overlap
+    # p 'These were the values for valid length:', valid_length
+    # p 'These were the values for consecutive:', consecutive
+    # p 'These were the values for not overlap:', not_overlap
     # p 'These were the values for valid coord:', valid_coordinate
-    valid_length && consecutive && not_overlap && is_valid
   end
 
   def valid_length?(ship, coordinates)

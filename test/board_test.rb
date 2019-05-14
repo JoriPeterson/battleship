@@ -21,11 +21,11 @@ class BoardTest < MiniTest::Test
   end
 
   def test_it_returns_valid_coordinates
-    @board.valid_coordinate?("A1")
-    @board.valid_coordinate?("D4")
-    @board.valid_coordinate?("A5")
-    @board.valid_coordinate?("E1")
-    @board.valid_coordinate?("A22")
+    assert @board.valid_coordinate?("A1")
+    assert @board.valid_coordinate?("D4")
+    refute @board.valid_coordinate?("A5")
+    refute @board.valid_coordinate?("E1")
+    refute @board.valid_coordinate?("A22")
   end
 
   def test_cells_return_coordinates_and_cell_objects
