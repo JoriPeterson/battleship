@@ -26,7 +26,6 @@ class Board
      }
   end
 
-  # make tests for this method
   def valid_coordinate?(coordinate)
     @cells.keys.include? coordinate
   end
@@ -39,15 +38,11 @@ class Board
     valid_length = valid_length?(ship, coordinates)
     consecutive = consecutive?(ship, coordinates)
     not_overlap = not_overlap?(coordinates)
-    # is_valid = valid_coordinates == coordinates
+
     valid_length && consecutive && not_overlap && valid_coordinates
     else
       false
     end
-    # p 'These were the values for valid length:', valid_length
-    # p 'These were the values for consecutive:', consecutive
-    # p 'These were the values for not overlap:', not_overlap
-    # p 'These were the values for valid coord:', valid_coordinate
   end
 
   def valid_length?(ship, coordinates)
@@ -107,12 +102,11 @@ class Board
   end
 
   def not_overlap?(coordinates)
-      coordinates.each do |coordinate|
-        if @cells[coordinate].empty? == false
-          break
-        end
+    coordinates.each do |coordinate|
+      if @cells[coordinate].empty? == false
+        break
       end
-
+    end
   end
 
   def place(ship, coordinates)
