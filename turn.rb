@@ -65,8 +65,20 @@ class Turn
     p "The player's shot on #{@last_player_shot} was a #{player_shot_status}"
     # require 'pry'; binding.pry
     p "The computer shot on #{comp_shot} was a #{computer_shot_status}"
-
+    end_game
     display_boards
+  end
+
+  def end_game
+    if @setup.computer_cruiser.sunk? && @setup.computer_submarine.sunk?
+      p  'YOU WON DO A HAPPY DANCE'
+      @setup.main_menu
+    elsif @setup.player_cruiser.sunk? && @setup.player_submarine.sunk?
+      p 'YOU LOST BOOHOO'
+      @setup.main_menu
+    else
+      display_boards
+    end
   end
 
 end
