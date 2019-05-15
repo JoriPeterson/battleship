@@ -119,9 +119,6 @@ class Board
       true
     else
       false
-      # raise ArgumentError "Oh, those coordinates aren't valid"
-      # there may be a way to do try placing the ship until successful recursively
-      # ex. place(ship, coordinates)
     end
   end
 
@@ -129,7 +126,6 @@ class Board
 
     rows = Math.sqrt(@cells.keys.length).to_i
     columns = rows
-
     rr = " "
     #rr = rendered_rows
 

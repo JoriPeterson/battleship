@@ -1,7 +1,7 @@
 require 'pry'
 
 class Cell
-  attr_reader :coordinate, :ship, :fired_upon, :s
+  attr_reader :coordinate, :ship, :fired_upon
 
   def initialize(coordinate)
     @coordinate = coordinate
