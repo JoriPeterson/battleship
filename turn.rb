@@ -36,19 +36,31 @@ class Turn
     end
   end
 
-    def computer_shot
-      # display_boards
-      comp_shot = @setup.player_board.cells.keys.sample
-      cell = @setup.player_board.cells[comp_shot]
-        if cell.fired_upon? == false
-          cell.fire_upon
-        end
+  def computer_shot
+    # This filters down the player cells hash to cells that haven't
+    # yet been fired upon
+    unfired_upon_player_cells = @setup.player_board.cells.select do | key, cell | !cell.fired_upon?
+    end
+    # Get a random cell key that hasn't been fired on yet
+    comp_shot = unfired_upon_player_cells.keys.sample
+    player_cell = @setup.player_board.cells[comp_shot]
+    player_cell.fire_upon
 
-      player_cell = @setup.computer_board.cells[@last_player_shot]
+    computer_cell = @setup.computer_board.cells[@last_player_shot]
 
-    p "Your shot on #{@last_player_shot} was a #{player_cell.coordinate}"
+    player_shot_status = 'miss'
+    if computer_cell.coordinate == 'S'
+      player_shot_status = "hit"
+    end
+
+    computer_shot_status = 'miss'
+    if player_cell.coordinate == 'S'
+      computer_shot_status = 'hit'
+    end
+
+    p "Your shot on #{@last_player_shot} was a #{player_shot_status}"
     # require 'pry'; binding.pry
-    p "My shot on #{comp_shot} was a #{cell.coordinate}"
+    p "My shot on #{comp_shot} was a #{computer_shot_status}"
 
     display_boards
   end
