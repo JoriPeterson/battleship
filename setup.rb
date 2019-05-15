@@ -29,36 +29,108 @@ class Setup
     end
   end
 
+  def next_column(coords)
+    last_coord = coords.last
+    # p last_coord
+    new_num = last_coord[1].to_i + 1
+
+    last_coord[0] + new_num.to_s
+  end
+
+  def prev_column(coords)
+    first_coord = coords.first
+    # p first_coord
+    new_num = first_coord[1].to_i - 1
+
+    first_coord[0] + new_num.to_s
+  end
+
+  def next_row(coords)
+    last_coord = coords.last
+    new_letter = last_coord[0].next
+
+    new_letter + last_coord[1]
+  end
+
+  def prev_row(coords)
+    first_coord = coords.first
+    new_letter = (first_coord[0].ord-1).chr
+
+    new_letter + first_coord[1]
+  end
+
+  def generate_coords(ship_length)
+    coords = []
+    random_num = rand()
+    is_horizontal = random_num > 0.5
+    is_vertical = random_num < 0.5
+
+    until coords.length == ship_length
+      # binding.pry
+      if coords.length == 0
+        random_ship_coord = @computer_board.cells.keys.sample
+        # p 'testing cruiser coord', random_ship_coord
+        if @computer_board.valid_coordinate?(random_ship_coord)
+          coords << random_ship_coord
+        end
+      elsif is_horizontal
+        new_coord = next_column(coords)
+        if @computer_board.valid_coordinate?(new_coord)
+          coords << new_coord
+        else
+          new_coord = prev_column(coords)
+          coords.unshift(new_coord)
+        end
+
+      elsif is_vertical
+        new_coord = next_row(coords)
+        if @computer_board.valid_coordinate?(new_coord)
+          coords << new_coord
+        else
+          new_coord = prev_row(coords)
+          coords.unshift(new_coord)
+        end
+      end
+    end
+    p 'testing loop', coords
+
+    coords
+  end
+
   def computer_ship_placement
     # get random coordinates >>
-      #cruisercoords
-    cruiser_coords = []
-    unless cruiser_coords.length >= 3
-      random_ship_coords = @computer_board.cells.keys.shuffle.sample
-      cruiser_coords << random_ship_coords
-    end
+      # cruisercoords
 
-      # submarine coords
-    submarine_coords = []
-    unless submarine_coords.length >= 2
-      random_ship_coords = @computer_board.cells.keys.shuffle.sample
-      submarine_coords << random_ship_coords
-    end
+    cruiser_coords = generate_coords(3)
+    #   # submarine coords
+    # submarine_coords = []
+    # until submarine_coords.length == 2
+    #   random_ship_coord = @computer_board.cells.keys.sample
+    #   # p 'testing submarine coord', random_ship_coord
+    #   if @computer_board.valid_coordinate?(random_ship_coord)
+    #     submarine_coords << random_ship_coord
+    #   end
+    # end
 
     # place ships >>
-      # placecruiserusingcruisercoords
-      @computer_board.place(@computer_cruiser, cruiser_coords)
+      # place cruiser using cruiser coords
+    @computer_board.place(@computer_cruiser, cruiser_coords)
+      # binding.pry
     # check if placement is valid
       # @computer_board.valid_placement?(@computer_cruiser, cruiser_coords)
 
     # place submarine using submarine coords
-      @computer_board.place(@computer_submarine, submarine_coords)
+    placed = false
+    while !placed
+      submarine_coords = generate_coords(2)
+      p 'try to create coords', submarine_coords
+      placed = @computer_board.place(@computer_submarine, submarine_coords)
+    end
     # check if placement is valid
       # @computer_board.valid_placement?(@computer_submarine, submarine_coords)
 
     # render the board with coordinates
-      @computer_board.render(false)
-      @computer_board.render(true)
+      puts @computer_board.render(false)
       get_user_coords
   end
 

@@ -31,7 +31,6 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-
     valid_coordinates = coordinates.all? do |coord|
       valid_coordinate?(coord)
     end
@@ -53,8 +52,10 @@ class Board
   def consecutive?(ship, coordinates)
     if ship.length == 3
       horizontal_cruiser.include?(coordinates) || vertical_cruiser.include?(coordinates)
-    else
+    elsif ship.length == 2
       horizontal_submarine.include?(coordinates) || vertical_submarine.include?(coordinates)
+    else
+      p 'an error occured in consecutive'
     end
   end
 
@@ -110,12 +111,17 @@ class Board
 
   def place(ship, coordinates)
     if valid_placement?(ship, coordinates)
+      p 'ship', ship
+      p 'coordinates', coordinates
       coordinates.each do |cell_key|
         @cells[cell_key].place_ship(ship)
       end
       true
     else
       false
+      # raise ArgumentError "Oh, those coordinates aren't valid"
+      # there may be a way to do try placing the ship until successful recursively
+      # ex. place(ship, coordinates)
     end
   end
 
