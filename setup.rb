@@ -5,7 +5,7 @@ require 'pry'
 
 class Setup
   attr_reader :computer_board, :player_board
-  
+
   def initialize
     @player_board = Board.new
     @computer_board = Board.new
@@ -58,7 +58,7 @@ class Setup
 
     # render the board with coordinates
       @computer_board.render(false)
-      p 'the ai board should be rendered here', @computer_board.render(true)
+      @computer_board.render(true)
       get_user_coords
   end
 
@@ -79,7 +79,7 @@ class Setup
       user_cruiser_coords = []
       (1..@player_cruiser.length).each do
         print '> '
-        user_cruiser_coords << gets.chomp.to_s
+        user_cruiser_coords << gets.chomp.to_s.upcase
       end
 
       placed = @player_board.place(@player_cruiser, user_cruiser_coords)
@@ -89,7 +89,7 @@ class Setup
       end
     end
 
-    p "You have entered coordinates: #{user_cruiser_coords}"
+    # p "You have entered coordinates: #{user_cruiser_coords}"
     show_user_board
     p 'Enter the squares for the Submarine (2 spaces):'
     p '>'
@@ -98,7 +98,7 @@ class Setup
       user_submarine_coords = []
       (1..@player_submarine.length).each do
         print '> '
-        user_submarine_coords << gets.chomp.to_s
+        user_submarine_coords << gets.chomp.to_s.upcase
       end
 
       placed = @player_board.place(@player_submarine, user_submarine_coords)
@@ -108,8 +108,6 @@ class Setup
       end
     end
     show_user_board
-    # display_boards
-    # check if placement is valid
   end
 
   # show player their board and placed ships
@@ -120,13 +118,5 @@ class Setup
   def show_computer_board
     puts @computer_board.render(false)
   end
-
-  # def display_boards
-  #   p '============ AI BOARD =========='
-  #   puts @computer_board.render(false)
-  #   p '============ USER BOARD =========='
-  #   puts show_user_board
-  # end
-
 
 end
