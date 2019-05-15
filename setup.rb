@@ -4,7 +4,8 @@ require './lib/board'
 require 'pry'
 
 class Setup
-  attr_reader :computer_board, :player_board, :computer_cruiser, :computer_submarine, :player_submarine, :player_cruiser 
+  attr_reader :computer_board, :player_board, :computer_cruiser,
+  :computer_submarine, :player_submarine, :player_cruiser
 
   def initialize
     @player_board = Board.new
@@ -16,13 +17,11 @@ class Setup
   end
 
   def main_menu
-    # system clear
-    # make reset method to restart game
-    # reset
     p 'Welcome to BATTLESHIP'
     p 'Enter p to play. Enter q to quit.'
     answer = gets.chomp
     if answer == 'p'
+      system "clear"
       computer_ship_placement
     else
       p 'okay byeeeee'
