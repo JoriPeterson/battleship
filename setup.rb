@@ -4,7 +4,7 @@ require './lib/board'
 require 'pry'
 
 class Setup
-  attr_reader :computer_board, :player_board
+  attr_reader :computer_board, :player_board, :computer_cruiser, :computer_submarine, :player_submarine, :player_cruiser 
 
   def initialize
     @player_board = Board.new
@@ -31,31 +31,25 @@ class Setup
 
   def next_column(coords)
     last_coord = coords.last
-    # p last_coord
     new_num = last_coord[1].to_i + 1
-
     last_coord[0] + new_num.to_s
   end
 
   def prev_column(coords)
     first_coord = coords.first
-    # p first_coord
     new_num = first_coord[1].to_i - 1
-
     first_coord[0] + new_num.to_s
   end
 
   def next_row(coords)
     last_coord = coords.last
     new_letter = last_coord[0].next
-
     new_letter + last_coord[1]
   end
 
   def prev_row(coords)
     first_coord = coords.first
     new_letter = (first_coord[0].ord-1).chr
-
     new_letter + first_coord[1]
   end
 
@@ -66,7 +60,7 @@ class Setup
     is_vertical = random_num < 0.5
 
     until coords.length == ship_length
-      # binding.pry
+
       if coords.length == 0
         random_ship_coord = @computer_board.cells.keys.sample
         # p 'testing cruiser coord', random_ship_coord
@@ -98,38 +92,14 @@ class Setup
   end
 
   def computer_ship_placement
-    # get random coordinates >>
-      # cruisercoords
-
     cruiser_coords = generate_coords(3)
-    #   # submarine coords
-    # submarine_coords = []
-    # until submarine_coords.length == 2
-    #   random_ship_coord = @computer_board.cells.keys.sample
-    #   # p 'testing submarine coord', random_ship_coord
-    #   if @computer_board.valid_coordinate?(random_ship_coord)
-    #     submarine_coords << random_ship_coord
-    #   end
-    # end
-
-    # place ships >>
-      # place cruiser using cruiser coords
     @computer_board.place(@computer_cruiser, cruiser_coords)
-      # binding.pry
-    # check if placement is valid
-      # @computer_board.valid_placement?(@computer_cruiser, cruiser_coords)
-
-    # place submarine using submarine coords
     placed = false
     while !placed
       submarine_coords = generate_coords(2)
       p 'try to create coords', submarine_coords
       placed = @computer_board.place(@computer_submarine, submarine_coords)
     end
-    # check if placement is valid
-      # @computer_board.valid_placement?(@computer_submarine, submarine_coords)
-
-    # render the board with coordinates
       puts @computer_board.render(false)
       get_user_coords
   end
