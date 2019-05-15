@@ -11,6 +11,7 @@ class Turn
   end
 
   def display_boards
+    system "clear"
     p "============ AI BOARD =========="
 
     puts @setup.show_computer_board
@@ -24,12 +25,17 @@ class Turn
     p 'Enter a coordinate to fire upon:'
     p '>'
     answer = gets.chomp.upcase
-
     if @setup.computer_board.valid_coordinate?(answer)
-      @setup.computer_board.cells[answer].fire_upon
-      @last_player_shot = answer
+      if @setup.computer_board.cells[answer].fired_upon?
+       p "Oh no! You already fired on that cell!"
+       player_shot
 
-      computer_shot
+      else
+       @setup.computer_board.cells[answer].fire_upon
+       @last_player_shot = answer
+
+       computer_shot
+      end
     else
       p 'That is an invalid coordinate. Please enter a valid coordinate:'
       player_shot
@@ -71,10 +77,10 @@ class Turn
 
   def end_game
     if @setup.computer_cruiser.sunk? && @setup.computer_submarine.sunk?
-      p  'YOU WON DO A HAPPY DANCE'
+      puts  "YOU WON DO A HAPPY DANCE"
       @setup.main_menu
     elsif @setup.player_cruiser.sunk? && @setup.player_submarine.sunk?
-      p 'YOU LOST BOOHOO'
+      puts 'YOU LOST BOOHOO'
       @setup.main_menu
     else
       display_boards
