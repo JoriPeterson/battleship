@@ -49,18 +49,22 @@ class Turn
     computer_cell = @setup.computer_board.cells[@last_player_shot]
 
     player_shot_status = 'miss'
-    if computer_cell.coordinate == 'S'
+    if @setup.computer_cruiser.sunk? || @setup.computer_submarine.sunk?
+      player_shot_status = "sinker"
+    elsif !computer_cell.empty?
       player_shot_status = "hit"
     end
 
     computer_shot_status = 'miss'
-    if player_cell.coordinate == 'S'
+    if @setup.player_cruiser.sunk? || @setup.player_submarine.sunk?
+      player_shot_status = "sinker"
+    elsif !player_cell.empty?
       computer_shot_status = 'hit'
     end
 
-    p "Your shot on #{@last_player_shot} was a #{player_shot_status}"
+    p "The player's shot on #{@last_player_shot} was a #{player_shot_status}"
     # require 'pry'; binding.pry
-    p "My shot on #{comp_shot} was a #{computer_shot_status}"
+    p "The computer shot on #{comp_shot} was a #{computer_shot_status}"
 
     display_boards
   end
