@@ -17,6 +17,7 @@ class Setup
   end
 
   def main_menu
+    initialize
     p 'Welcome to BATTLESHIP'
     p 'Enter p to play. Enter q to quit.'
     answer = gets.chomp
@@ -24,6 +25,7 @@ class Setup
       computer_ship_placement
     else
       p 'okay byeeeee'
+      exit!
     end
   end
 

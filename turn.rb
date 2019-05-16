@@ -11,14 +11,14 @@ class Turn
   end
 
   def display_boards
-    system "clear"
+
     p "============ AI BOARD =========="
 
     puts @setup.show_computer_board
 
     p "============ USER BOARD =========="
     puts @setup.show_user_board
-    player_shot
+    
   end
 
   def player_shot
@@ -33,8 +33,6 @@ class Turn
       else
        @setup.computer_board.cells[answer].fire_upon
        @last_player_shot = answer
-
-       computer_shot
       end
     else
       p 'That is an invalid coordinate. Please enter a valid coordinate:'
@@ -43,11 +41,9 @@ class Turn
   end
 
   def computer_shot
-    # This filters down the player cells hash to cells that haven't
-    # yet been fired upon
     unfired_upon_player_cells = @setup.player_board.cells.select do | key, cell | !cell.fired_upon?
     end
-    # Get a random cell key that hasn't been fired on yet
+
     comp_shot = unfired_upon_player_cells.keys.sample
     player_cell = @setup.player_board.cells[comp_shot]
     player_cell.fire_upon
@@ -55,36 +51,34 @@ class Turn
     computer_cell = @setup.computer_board.cells[@last_player_shot]
 
     player_shot_status = 'miss'
-    if @setup.computer_cruiser.sunk? || @setup.computer_submarine.sunk?
+    if computer_cell.ship && computer_cell.ship.sunk?
       player_shot_status = "sinker"
     elsif !computer_cell.empty?
       player_shot_status = "hit"
     end
 
     computer_shot_status = 'miss'
-    if @setup.player_cruiser.sunk? || @setup.player_submarine.sunk?
+    if player_cell.ship && player_cell.ship.sunk?
       player_shot_status = "sinker"
     elsif !player_cell.empty?
       computer_shot_status = 'hit'
     end
 
     p "The player's shot on #{@last_player_shot} was a #{player_shot_status}"
-    # require 'pry'; binding.pry
     p "The computer shot on #{comp_shot} was a #{computer_shot_status}"
-    end_game
-    display_boards
-  end
+    end
 
   def end_game
     if @setup.computer_cruiser.sunk? && @setup.computer_submarine.sunk?
       puts  "YOU WON DO A HAPPY DANCE"
+
       @setup.main_menu
+
     elsif @setup.player_cruiser.sunk? && @setup.player_submarine.sunk?
       puts 'YOU LOST BOOHOO'
+
       @setup.main_menu
     else
-      display_boards
     end
   end
-
 end
