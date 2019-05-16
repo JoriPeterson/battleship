@@ -4,7 +4,8 @@ require './lib/board'
 require 'pry'
 
 class Setup
-  attr_reader :computer_board, :player_board, :computer_cruiser, :computer_submarine, :player_submarine, :player_cruiser 
+  attr_reader :computer_board, :player_board, :computer_cruiser,
+  :computer_submarine, :player_submarine, :player_cruiser
 
   def initialize
     @player_board = Board.new
@@ -16,9 +17,6 @@ class Setup
   end
 
   def main_menu
-    # system clear
-    # make reset method to restart game
-    # reset
     p 'Welcome to BATTLESHIP'
     p 'Enter p to play. Enter q to quit.'
     answer = gets.chomp
@@ -86,7 +84,7 @@ class Setup
         end
       end
     end
-    p 'testing loop', coords
+    # p 'testing loop for computer coords, coords
 
     coords
   end
@@ -97,7 +95,7 @@ class Setup
     placed = false
     while !placed
       submarine_coords = generate_coords(2)
-      p 'try to create coords', submarine_coords
+      # p 'try to create submarine coords', submarine_coords
       placed = @computer_board.place(@computer_submarine, submarine_coords)
     end
       puts @computer_board.render(false)
@@ -108,11 +106,7 @@ class Setup
     p 'I have laid out my ships on the grid.'
     p 'You now need to lay out your two ships.'
     p 'The Cruiser is three units long and the Submarine is two units long.'
-    p '  1 2 3 4'
-    p 'A . . . .'
-    p 'B . . . .'
-    p 'C . . . .'
-    p 'D . . . .'
+    print @player_board.render
     p 'Enter the squares for the Cruiser (3 spaces):'
 
     # get user coordinates from input

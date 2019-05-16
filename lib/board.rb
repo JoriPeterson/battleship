@@ -111,8 +111,8 @@ class Board
 
   def place(ship, coordinates)
     if valid_placement?(ship, coordinates)
-      p 'ship', ship
-      p 'coordinates', coordinates
+      # p 'ship', ship
+      # p 'coordinates', coordinates
       coordinates.each do |cell_key|
         @cells[cell_key].place_ship(ship)
       end
