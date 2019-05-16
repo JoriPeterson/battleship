@@ -24,6 +24,7 @@ class Setup
       computer_ship_placement
     else
       p 'okay byeeeee'
+      exit!
     end
   end
 
