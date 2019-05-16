@@ -11,19 +11,14 @@ class Turn
   end
 
   def display_boards
-    
+
     p "============ AI BOARD =========="
 
     puts @setup.show_computer_board
 
     p "============ USER BOARD =========="
     puts @setup.show_user_board
-
-    # until end_game
-    #   player_shot
-    #   computer_shot
-    #   display_boards
-    # end
+    
   end
 
   def player_shot
@@ -56,14 +51,14 @@ class Turn
     computer_cell = @setup.computer_board.cells[@last_player_shot]
 
     player_shot_status = 'miss'
-    if @setup.computer_cruiser.sunk? || @setup.computer_submarine.sunk?
+    if computer_cell.ship && computer_cell.ship.sunk?
       player_shot_status = "sinker"
     elsif !computer_cell.empty?
       player_shot_status = "hit"
     end
 
     computer_shot_status = 'miss'
-    if @setup.player_cruiser.sunk? || @setup.player_submarine.sunk?
+    if player_cell.ship && player_cell.ship.sunk?
       player_shot_status = "sinker"
     elsif !player_cell.empty?
       computer_shot_status = 'hit'
